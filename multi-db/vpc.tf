@@ -56,43 +56,44 @@ resource "aws_db_subnet_group" "default" {
   }
 }
 
-resource "aws_security_group" "ec2_sg" {
-  name        = "multi-db-ec2-sg"
-  description = "Allow SSH inbound traffic"
-  vpc_id      = aws_vpc.main.id
+# resource "aws_security_group" "ec2_sg" {
+#   name        = "multi-db-ec2-sg"
+#   description = "Allow SSH inbound traffic"
+#   vpc_id      = aws_vpc.main.id
 
-  ingress {
-    description = "SSH from anywhere"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+#   ingress {
+#     description = "SSH from anywhere"
+#     from_port   = 22
+#     to_port     = 22
+#     protocol    = "tcp"
+#     cidr_blocks = ["0.0.0.0/0"]
+#   }
 
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+#   egress {
+#     from_port   = 0
+#     to_port     = 0
+#     protocol    = "-1"
+#     cidr_blocks = ["0.0.0.0/0"]
+#   }
 
-  tags = {
-    Name = "multi-db-ec2-sg"
-  }
-}
+#   tags = {
+#     Name = "multi-db-ec2-sg"
+#   }
+# }
+
 
 resource "aws_security_group" "db_sg" {
   name        = "multi-db-rds-sg"
   description = "Allow inbound traffic on DB port from EC2"
   vpc_id      = aws_vpc.main.id
 
-  ingress {
-    description     = "PostgreSQL from EC2"
-    from_port       = var.db_port
-    to_port         = var.db_port
-    protocol        = "tcp"
-    security_groups = [aws_security_group.ec2_sg.id]
-  }
+  # ingress {
+  #   description     = "PostgreSQL from EC2"
+  #   from_port       = var.db_port
+  #   to_port         = var.db_port
+  #   protocol        = "tcp"
+  #   security_groups = [aws_security_group.ec2_sg.id]
+  # }
 
   tags = {
     Name = "multi-db-rds-sg"
