@@ -10,12 +10,6 @@ variable "instance_type" {
   default     = "t3.micro"
 }
 
-variable "linux_os_ami_name_filter" {
-  description = "Filter string for Amazon Linux 2 AMI"
-  type        = string
-  default     = "amzn2-ami-hvm-*-x86_64-gp2"
-}
-
 variable "db_port" {
   description = "Port for the PostgreSQL database"
   type        = number
@@ -25,7 +19,7 @@ variable "db_port" {
 variable "db_name" {
   description = "Name of the database"
   type        = string
-  default     = "mydb"
+  default     = "multidb"
 }
 
 variable "db_username" {
@@ -33,8 +27,13 @@ variable "db_username" {
   type        = string
   default     = "dbadmin"
 }
-variable "instance_running" {
-  description = "Whether the EC2 instance should be running or stopped"
-  type        = bool
-  default     = true
+
+variable "db_password" {
+  description = "Database master password"
+  type        = string
+  sensitive   = true
+}
+variable "my_ip" {
+  description = "Your local public IP address (CIDR notation, e.g., 1.2.3.4/32)"
+  type        = string
 }
